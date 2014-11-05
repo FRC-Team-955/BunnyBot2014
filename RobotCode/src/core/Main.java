@@ -1,6 +1,5 @@
 package core;
 
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**

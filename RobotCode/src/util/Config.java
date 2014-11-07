@@ -20,4 +20,9 @@ public class Config
     {
         public static final double maxRampRate = .1;
     }
+    
+    public class Auto
+    {
+        public static final int driveForwardTime = 10;
+    }
 }

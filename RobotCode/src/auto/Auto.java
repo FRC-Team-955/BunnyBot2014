@@ -11,18 +11,21 @@ import util.Config;
 public class Auto 
 {
     private Timer driveTime = new Timer();
+    private Drive drive;
     
     public Auto(Intake newIntake, Drive newDrive)
     {
-        drive = newDrive;
+       drive = newDrive;
     }
     
-    public void driveForward() {
+    public void driveForward() 
+    {
         driveTime.start();
         if(driveTime.get() <= Config.Auto.driveForwardTime)
         {
-            drive.moveForward();
+            drive.moveForward(Config.Auto.driveForwardSpeed);
         }
-        
+        else
+            drive.moveForward(0);
     }
 }

@@ -12,10 +12,12 @@ public class Auto
 {
     private Timer driveTime = new Timer();
     private Drive drive;
+    private Intake intake;
     
     public Auto(Intake newIntake, Drive newDrive)
     {
        drive = newDrive;
+       intake = newIntake;
     }
     
     public void driveForward() 
@@ -27,5 +29,6 @@ public class Auto
         }
         else
             drive.moveForward(0);
+        intake.openClaw();
     }
 }

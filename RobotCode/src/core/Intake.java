@@ -24,31 +24,23 @@ public class Intake
      */
     public void run()
     {
-        if (joy.getButton(Config.MyJoystick.chnIntakeOpen))
-        {
+        if (joy.getButton(Config.MyJoystick.btIntakeOpen))
             openClaw();
-        }
         
-        if (joy.getButton(Config.MyJoystick.chnIntakeClose))
-        {
+        if (joy.getButton(Config.MyJoystick.btIntakeClose))
             closeClaw();
-        }
         
-        if (joy.getButton(Config.MyJoystick.chnIntakeUp)) 
-        {
-            openArm();
-        }
+        if (joy.getButton(Config.MyJoystick.btIntakeUp)) 
+            armUp();
         
-        if (joy.getButton(Config.MyJoystick.chnIntakeDown)) 
-        {
-            closeArm();
-        }
+        if (joy.getButton(Config.MyJoystick.btIntakeDown)) 
+            armDown();
     }
     
     /**
      * Opens horizontal part of intake
      */
-    public void openClaw ()
+    public void openClaw()
     {
         mtClaw.set(Config.Intake.mtClawSpeed);
     }
@@ -56,7 +48,7 @@ public class Intake
     /**
      * Closes horizontal part of intake
      */
-    public void closeClaw ()
+    public void closeClaw()
     {
         mtClaw.set(-Config.Intake.mtClawSpeed);
     }
@@ -64,7 +56,7 @@ public class Intake
     /**
      * Opens vertical part of intake
      */
-    public void openArm ()
+    public void armUp()
     {
         mtArm.set(Config.Intake.mtArmSpeed);
     }
@@ -72,7 +64,7 @@ public class Intake
     /**
      * Closes vertical part of intake
      */
-    public void closeArm ()
+    public void armDown()
     {
         mtArm.set(-Config.Intake.mtArmSpeed);
     }

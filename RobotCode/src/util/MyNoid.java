@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Solenoid;
  *
  * @author Programming
  */
-public class MySolenoid {
+public class MyNoid {
 
     Solenoid noidOne;
     Solenoid noidTwo;
@@ -17,7 +17,7 @@ public class MySolenoid {
      * @param portOne
      * @param portTwo
      */
-    public MySolenoid(int portOne, int portTwo) {
+    public MyNoid(int portOne, int portTwo) {
         noidOne = new Solenoid(portOne);
         noidTwo = new Solenoid(portTwo);
         noidOne.set(true);
@@ -33,9 +33,12 @@ public class MySolenoid {
         noidOne.set(newState);
         noidTwo.set(!newState);
     }
-
-    public void switchNoids() {
-        
+    
+    /**
+     * Gets solenoid value
+     * @return solenoid value
+     */
+    public boolean get() {
+        return noidOne.get();
     }
-
 }

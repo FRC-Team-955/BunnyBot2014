@@ -53,7 +53,7 @@ public class Drive
      */
     public void turnRight (double speed) 
     {
-        setDrive(speed, -1 * speed);
+        setDrive(speed, -speed);
     } 
     
     /**
@@ -62,7 +62,7 @@ public class Drive
      */
     public void turnLeft (double speed) 
     {
-        setDrive( -1 * speed, speed);
+        setDrive( -speed, speed);
     } 
     
     /**
@@ -80,7 +80,6 @@ public class Drive
      */
     public void moveBack (double speed) 
     {
-        setDrive( -1 * speed, -1 * speed);
+        setDrive( -speed, -speed);
     } 
-
 }

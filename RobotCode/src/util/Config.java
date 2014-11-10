@@ -14,15 +14,15 @@ public class Config {
         // Buttons chns
         public static final int chnDpadHorz = 6;
         public static final int chnDpadVert = 5;
-        public static final int chnIntakeOpen = 7;
-        public static final int chnIntakeClose = 8;
-        public static final int chnIntakeUp = 7;
-        public static final int chnIntakeDown = 8;
-        public static final int chnPanNoid = 11;
+        public static final int btIntakeOpen = 7;
+        public static final int btIntakeClose = 8;
+        public static final int btIntakeUp = 7;
+        public static final int btIntakeDown = 8;
 
     }
 
-    public class Drive {
+    public class Drive 
+    {
 
         public static final double maxRampRate = .1;
         public static final int chnMtLeftOne = 1;
@@ -41,18 +41,10 @@ public class Config {
         public static final int chnMtArm = 8;
     }
 
-    public class Auto {
+    public class Auto 
+    {
 
         public static final int driveForwardTime = 10;
         public static final double driveForwardSpeed = 1;
     }
-
-    public class Pan {
-
-        public static final int chnNoidOne = 1 ; // TODO put real value
-        public static final int chnNoidTwo = 2;  // TODO put real value      
-    
-    
-    }
-
 }

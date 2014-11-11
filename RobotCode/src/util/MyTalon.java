@@ -26,13 +26,13 @@ public class MyTalon extends Talon
         {
 
             if (required > get()) 
-                set(super.get() + Config.Drive.maxRampRate);
+                super.set(super.get() + Config.Drive.maxRampRate);
             
             else 
-                set(super.get() - Config.Drive.maxRampRate);
+                super.set(super.get() - Config.Drive.maxRampRate);
         } 
         
         else 
-            set(required);
+            super.set(required);
     }
 }

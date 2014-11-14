@@ -12,23 +12,31 @@ public class Auto
 {
     private Timer driveTime = new Timer();
     private Drive drive;
-    private Intake intake;
+	boolean timerStarted = false;
+    //private Intake intake;
     
-    public Auto(Intake newIntake, Drive newDrive)
+    public Auto(/*Intake newIntake,*/ Drive newDrive)
     {
        drive = newDrive;
-       intake = newIntake;
+       //intake = newIntake;
     }
     
     public void driveForward() 
     {
-        driveTime.start();
+		if(!timerStarted) {
+			driveTime.start();
+			timerStarted = true;
+		}
+        
         if(driveTime.get() <= Config.Auto.driveForwardTime)
         {
             drive.moveForward(Config.Auto.driveForwardSpeed);
-        }
-        else
+        }	
+		else {
             drive.moveForward(0);
-        intake.openClaw();
+			driveTime.stop();
+		}	
+		System.out.println(driveTime.get());
+       //intake.openClaw();
     }
 }

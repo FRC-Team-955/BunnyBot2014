@@ -28,7 +28,7 @@ public class Drive
      */
     public void run() 
     {
-        setDrive((joy.getX()) + joy.getY(), -joy.getX() + joy.getY());
+        setDrive((-joy.getX()) + joy.getY(), joy.getX() + joy.getY());
     }
 
     /**
@@ -38,9 +38,10 @@ public class Drive
      */
     public void setDrive(double left, double right) 
     {
-        mtRightOne.ramp(right);
-        mtRightTwo.ramp(right);
-        mtRightThree.ramp(right);
+		
+        mtRightOne.ramp(-right);
+        mtRightTwo.ramp(-right);
+        mtRightThree.ramp(-right);
 
         mtLeftOne.ramp(left);
         mtLeftTwo.ramp(left);
@@ -71,7 +72,7 @@ public class Drive
      */
     public void moveForward (double speed) 
     {
-        setDrive(speed,speed);
+        setDrive(-speed,-speed);
     } 
     
     /**

@@ -2,6 +2,7 @@ package core;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import util.*;
+import auto.Auto;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -14,6 +15,7 @@ public class Main extends IterativeRobot
 {
     MyJoystick joy = new MyJoystick(Config.MyJoystick.chn);
     Drive drive = new Drive(joy);
+	Auto auto = new Auto(drive);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -29,7 +31,7 @@ public class Main extends IterativeRobot
      */
     public void autonomousPeriodic() 
     {
-
+		auto.driveForward();
     }
     
 

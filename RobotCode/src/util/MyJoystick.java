@@ -36,6 +36,10 @@ public class MyJoystick extends Joystick
             buttonState[i] = !lastButtonState[i] && super.getRawButton(i);
             lastButtonState[i] = super.getRawButton(i);
         }
+		
+		//if(getButton(1)) {
+			System.out.println("true");
+		//}
     }
     
     /**

@@ -10,6 +10,7 @@ public class Config {
 
         public static final int numberOfButtons = 12;
         public static final double minDpadNumber = .5;
+        public static final int chn = 1;
 
         // Buttons chns
         public static final int chnDpadHorz = 6;
@@ -25,12 +26,12 @@ public class Config {
     {
 
         public static final double maxRampRate = .1;
-        public static final int chnMtLeftOne = 1;
-        public static final int chnMtLeftTwo = 2;
-        public static final int chnMtLeftThree = 3;
-        public static final int chnMtRightOne = 4;
-        public static final int chnMtRightTwo = 5;
-        public static final int chnMtRightThree = 6;
+        public static final int chnMtLeftOne = 2;
+        public static final int chnMtLeftTwo = 3;
+        public static final int chnMtLeftThree = 4;
+        public static final int chnMtRightOne = 7;
+        public static final int chnMtRightTwo = 8;
+        public static final int chnMtRightThree = 9;
     }
 
     public class Intake {

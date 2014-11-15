@@ -1,6 +1,7 @@
 package core;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import util.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -11,13 +12,16 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class Main extends IterativeRobot
 {
+    MyJoystick joy = new MyJoystick(Config.MyJoystick.chn);
+    Drive drive = new Drive(joy);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() 
     {
-
+        joy.setAxisChannel(MyJoystick.AxisType.kX, 3);
+        joy.setAxisChannel(MyJoystick.AxisType.kY, 2);
     }
 
     /**
@@ -34,6 +38,8 @@ public class Main extends IterativeRobot
      */
     public void teleopPeriodic() 
     {
-        
+        joy.update();
+        drive.run();
+
     }
 }

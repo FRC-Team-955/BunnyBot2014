@@ -22,13 +22,17 @@ public class Drive
     {
         joy = newJoy;
     }
-    
+   
     /**
      * When this is run, it uses joystick input to maneuver the robot.
      */
     public void run() 
     {
         setDrive((-joy.getX()) + joy.getY(), joy.getX() + joy.getY());
+        //mtLeftTwo.ramp(.5);
+        
+       // System.out.println("Not Running");
+        
     }
 
     /**

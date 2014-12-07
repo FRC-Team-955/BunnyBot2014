@@ -38,8 +38,8 @@ public class Config {
 
         public static final double mtClawSpeed = 1;
         public static final double mtArmSpeed = 1;
-        public static final int chnMtClaw = 7;
-        public static final int chnMtArm = 8;
+        public static final int chnMtClaw = 6; //TODO CHANGE
+        public static final int chnMtArm = 10;
     }
 
     public class Auto 

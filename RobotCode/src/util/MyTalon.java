@@ -10,7 +10,7 @@ public class MyTalon extends Talon
 {
     public MyTalon(int channel) 
     {
-        super(channel);
+         super(channel);
     }
     
     /**

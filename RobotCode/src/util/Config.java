@@ -15,8 +15,8 @@ public class Config {
         // Buttons chns
         public static final int chnDpadHorz = 6;
         public static final int chnDpadVert = 5;
-        public static final int btIntakeOpen = 7;
-        public static final int btIntakeClose = 8;
+        public static final int btIntakeOpen = 4;
+        public static final int btIntakeClose = 2;
         public static final int btIntakeUp = 7;
         public static final int btIntakeDown = 8;
 

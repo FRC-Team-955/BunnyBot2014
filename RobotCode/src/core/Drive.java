@@ -28,7 +28,10 @@ public class Drive
      */
     public void run() 
     {
-        setDrive((-joy.getX()) + joy.getY(), joy.getX() + joy.getY());
+        double x = Math.abs(joy.getX()) * joy.getX();
+        double y = Math.abs(joy.getY()) * joy.getY();
+        
+        setDrive(-x + y, x + y);
         //mtLeftTwo.ramp(.5);
         
        // System.out.println("Not Running");

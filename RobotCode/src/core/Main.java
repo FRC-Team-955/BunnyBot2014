@@ -15,7 +15,8 @@ public class Main extends IterativeRobot
 {
     MyJoystick joy = new MyJoystick(Config.MyJoystick.chn);
     Drive drive = new Drive(joy);
-	Auto auto = new Auto(drive);
+   // Auto auto = new Auto(drive);
+    Intake intake = new Intake(joy);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -31,7 +32,7 @@ public class Main extends IterativeRobot
      */
     public void autonomousPeriodic() 
     {
-		auto.driveForward();
+	//	auto.driveForward();
     }
     
 
@@ -42,6 +43,6 @@ public class Main extends IterativeRobot
     {
         joy.update();
         drive.run();
-
+        intake.run();
     }
 }

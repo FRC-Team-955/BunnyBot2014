@@ -38,7 +38,7 @@ public class MyJoystick extends Joystick
         }
 		
 		//if(getButton(1)) {
-			System.out.println("true");
+//			System.out.println("true");
 		//}
     }
     

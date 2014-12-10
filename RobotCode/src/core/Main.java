@@ -35,6 +35,8 @@ public class Main extends IterativeRobot
     public void autonomousPeriodic() 
     {
 	//	auto.driveForward();
+        test.run();
+    
     }
     
 
@@ -43,13 +45,10 @@ public class Main extends IterativeRobot
      */
     public void teleopPeriodic() 
     {
-//        if(testFlag){
-//        
-//        test.run();
-//        
-//        testFlag = false;
-//      
-//        }
+    
+        
+        
+        
         
         joy.update();
         drive.run();

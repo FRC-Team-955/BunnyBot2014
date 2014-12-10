@@ -25,31 +25,103 @@ public class Test {
 
     }
 
-    
     Timer timer = new Timer();
+
+    public void run() {
+        boolean timerStarted = false;
+
+        if(!timerStarted) {
+			timer.start();
+			timerStarted = true;
+		}
+        
+        if (timer.get() > 5.0) {
+
+            
+            System.out.println("Testing Left 1");
+            
+            d.mtLeftOne.ramp(.7);
+            d.mtLeftTwo.ramp(0);
+            d.mtLeftThree.ramp(0);
+            d.mtRightOne.ramp(0);
+            d.mtRightTwo.ramp(0);
+            d.mtRightThree.ramp(0);
+        }
+
+        if (timer.get() > 10.0) {
+
+            System.out.println("Testing Left 2");
+            d.mtLeftOne.ramp(0);
+            d.mtLeftTwo.ramp(.7);
+            d.mtLeftThree.ramp(0);
+            d.mtRightOne.ramp(0);
+            d.mtRightTwo.ramp(0);
+            d.mtRightThree.ramp(0);
+
+        }
+
+        if (timer.get() > 15.0) {
+
+            System.out.println("Testing Left 3");
+            d.mtLeftOne.ramp(0);
+            d.mtLeftTwo.ramp(0);
+            d.mtLeftThree.ramp(.7);
+            d.mtRightOne.ramp(0);
+            d.mtRightTwo.ramp(0);
+            d.mtRightThree.ramp(0);
+
+        }
+
+        if (timer.get() > 20.0) {
+
+            System.out.println("Testing Right 1");
+            d.mtLeftOne.ramp(0);
+            d.mtLeftTwo.ramp(0);
+            d.mtLeftThree.ramp(0);
+            d.mtRightOne.ramp(.7);
+            d.mtRightTwo.ramp(0);
+            d.mtRightThree.ramp(0);
+
+        }
+
+        if (timer.get() > 25.0) {
+
+            
+            System.out.println("Testing Right 2");
+            d.mtLeftOne.ramp(0);
+            d.mtLeftTwo.ramp(0);
+            d.mtLeftThree.ramp(0);
+            d.mtRightOne.ramp(0);
+            d.mtRightTwo.ramp(.7);
+            d.mtRightThree.ramp(0);
+
+        }
+        if (timer.get() > 30.0) {
+
+            System.out.println("Testing Right 3");
+            d.mtLeftOne.ramp(0);
+            d.mtLeftTwo.ramp(0);
+            d.mtLeftThree.ramp(0);
+            d.mtRightOne.ramp(0);
+            d.mtRightTwo.ramp(0);
+            d.mtRightThree.ramp(.7);
+
+        }
     
-    public void run(){
-    
-      
-    
+        if(timer.get() > 35) {}
+        
+        System.out.println("Stopping all");
+        
+         d.mtLeftOne.ramp(0);
+            d.mtLeftTwo.ramp(0);
+            d.mtLeftThree.ramp(0);
+            d.mtRightOne.ramp(0);
+            d.mtRightTwo.ramp(0);
+            d.mtRightThree.ramp(0);
+        
     }
-    
-    
-    public void testTalon(MyTalon talon, double startTime, String talonName){
-    timer.reset();
-    timer.start();
-    
-    if(timer.get() == 1) System.out.println("Running Left Talon 1 in 5 Seconds");
-    if(timer.get() == 2) System.out.println("Running Left Talon 1 in 4 Seconds");
-    if(timer.get() == 3) System.out.println("Running Left Talon 1 in 3 Seconds");
-    if(timer.get() == 4) System.out.println("Running Left Talon 1 in 2 Seconds");
-    if(timer.get() == 5) System.out.println("Running Left Talon 1 in 1 Seconds");
-     d.mtLeftOne.ramp(.7);
-    if(timer.get() == 10) d.mtLeftOne.ramp(0);
-    
-    if(timer.get() > 13) timer.stop();
-    
-    }
-    
-    
+
 }
+
+
+

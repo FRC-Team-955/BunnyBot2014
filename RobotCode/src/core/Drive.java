@@ -10,12 +10,12 @@ import util.MyJoystick;
  */
 public class Drive 
 {
-    MyTalon mtRightOne = new MyTalon(Config.Drive.chnMtRightOne);
-    MyTalon mtRightTwo = new MyTalon(Config.Drive.chnMtRightTwo);
-    MyTalon mtRightThree = new MyTalon(Config.Drive.chnMtRightThree);
-    MyTalon mtLeftOne = new MyTalon(Config.Drive.chnMtLeftOne);
-    MyTalon mtLeftTwo = new MyTalon(Config.Drive.chnMtLeftTwo);
-    MyTalon mtLeftThree = new MyTalon(Config.Drive.chnMtLeftThree);
+    public MyTalon mtRightOne = new MyTalon(Config.Drive.chnMtRightOne);
+    public MyTalon mtRightTwo = new MyTalon(Config.Drive.chnMtRightTwo);
+    public MyTalon mtRightThree = new MyTalon(Config.Drive.chnMtRightThree);
+    public MyTalon mtLeftOne = new MyTalon(Config.Drive.chnMtLeftOne);
+    public MyTalon mtLeftTwo = new MyTalon(Config.Drive.chnMtLeftTwo);
+    public MyTalon mtLeftThree = new MyTalon(Config.Drive.chnMtLeftThree);
     MyJoystick joy;
     
     public Drive (MyJoystick newJoy) 

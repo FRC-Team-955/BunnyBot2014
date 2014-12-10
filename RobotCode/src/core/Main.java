@@ -17,6 +17,8 @@ public class Main extends IterativeRobot
     Drive drive = new Drive(joy);
    // Auto auto = new Auto(drive);
     Intake intake = new Intake(joy);
+    Test test = new Test(drive, intake);
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -41,6 +43,14 @@ public class Main extends IterativeRobot
      */
     public void teleopPeriodic() 
     {
+        if(testFlag){
+        
+        test.run();
+        
+        testFlag = false;
+      
+        }
+        
         joy.update();
         drive.run();
         intake.run();

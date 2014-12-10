@@ -21,7 +21,7 @@ public class MyTalon extends Talon
     {
         if (Math.abs(super.get() - required) > Config.Drive.maxRampRate) 
         {
-            if (required > get()) 
+            if (required > super.get()) 
                 super.set(super.get() + Config.Drive.maxRampRate);
             
             else 

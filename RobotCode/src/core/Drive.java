@@ -31,28 +31,39 @@ public class Drive
         double x = Math.abs(joy.getX()) * joy.getX();
         double y = Math.abs(joy.getY()) * joy.getY();
         
-        setDrive(-x + y, x + y);
-        //mtLeftTwo.ramp(.5);
-        
-       // System.out.println("Not Running");
-        
+        setSpeed(-x + y, x + y, true);
     }
 
     /**
-     * This function sets the left, and right speeds of the motors.
-     * @param left is the speed of the motors on the left side
-     * @param right is the speed of the motors on the right side
+     * This function sets the left, and right speeds of the motors and ramps
+     * to the speed is ramp = true
+     * @param leftSpeed is the speed of the motors on the left side
+     * @param rightSpeed is the speed of the motors on the right side
+     * @param ramp is whether is should ramp or not
      */
-    public void setDrive(double left, double right) 
+    public void setSpeed(double leftSpeed, double rightSpeed, boolean ramp) 
     {
-		
-        mtRightOne.ramp(-right);
-        mtRightTwo.ramp(-right);
-        mtRightThree.ramp(-right);
-
-        mtLeftOne.ramp(left);
-        mtLeftTwo.ramp(left);
-        mtLeftThree.ramp(left);
+        rightSpeed = -rightSpeed;
+        
+	if(ramp)
+        {
+            mtRightOne.ramp(rightSpeed);
+            mtRightTwo.ramp(rightSpeed);
+            mtRightThree.ramp(rightSpeed);
+            mtLeftOne.ramp(leftSpeed);
+            mtLeftTwo.ramp(leftSpeed);
+            mtLeftThree.ramp(leftSpeed);
+        }
+        
+        else
+        {
+            mtRightOne.set(rightSpeed);
+            mtRightTwo.set(rightSpeed);
+            mtRightThree.set(rightSpeed);
+            mtLeftOne.set(leftSpeed);
+            mtLeftTwo.set(leftSpeed);
+            mtLeftThree.set(leftSpeed);
+        }
     }
     
     /**
@@ -61,7 +72,7 @@ public class Drive
      */
     public void turnRight (double speed) 
     {
-        setDrive(speed, -speed);
+        setSpeed(speed, -speed, true);
     } 
     
     /**
@@ -70,7 +81,7 @@ public class Drive
      */
     public void turnLeft (double speed) 
     {
-        setDrive( -speed, speed);
+        setSpeed( -speed, speed, true);
     } 
     
     /**
@@ -79,7 +90,7 @@ public class Drive
      */
     public void moveForward (double speed) 
     {
-        setDrive(-speed,-speed);
+        setSpeed(speed, speed, true);
     } 
     
     /**
@@ -88,6 +99,6 @@ public class Drive
      */
     public void moveBack (double speed) 
     {
-        setDrive( -speed, -speed);
+        setSpeed( -speed, -speed, true);
     } 
 }

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Talon;
 
 /**
  * Control for talon / ramp utility
+ * 
  * @author Programming
  */
 public class MyTalon extends Talon 
@@ -15,6 +16,7 @@ public class MyTalon extends Talon
     
     /**
      * Ramps the motor to the desired speed.
+     * 
      * @param required is the speed you want to ramp to
      */
     public void ramp(double required) 

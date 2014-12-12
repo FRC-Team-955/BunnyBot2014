@@ -2,6 +2,7 @@ package util;
 
 /**
  * PID controller
+ * 
  * @author Merfoo
  */
 public class PID
@@ -15,6 +16,7 @@ public class PID
     
     /**
      * Creates a pid controller with kP, kI, kD constants based on args
+     * 
      * @param newP
      * @param newI
      * @param newD 
@@ -28,6 +30,7 @@ public class PID
     
     /**
      * Updates the pid loop output value
+     * 
      * @param curr
      * @param want 
      */
@@ -43,6 +46,7 @@ public class PID
     
     /**
      * Returns the output from the pid loop
+     * 
      * @return 
      */
     public double getOutput()
@@ -52,6 +56,7 @@ public class PID
     
     /**
      * Sets the kP, kI, kD constants
+     * 
      * @param newP
      * @param newI
      * @param newD 

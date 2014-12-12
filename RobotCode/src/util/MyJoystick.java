@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * Adjusts joystick value to accommodate the refresh time of the program
+ * 
  * @author Seraj B
  */
 public class MyJoystick extends Joystick 
@@ -13,6 +14,7 @@ public class MyJoystick extends Joystick
     
     /**
      * Constructor
+     * 
      * @param portNum port number for the joystick 
      */
     public MyJoystick(int portNum)
@@ -36,14 +38,11 @@ public class MyJoystick extends Joystick
             buttonState[i] = !lastButtonState[i] && super.getRawButton(i);
             lastButtonState[i] = super.getRawButton(i);
         }
-		
-		//if(getButton(1)) {
-//			System.out.println("true");
-		//}
     }
     
     /**
      * Gives button value
+     * 
      * @param button the button number on the joystick
      * @return button value
      */
@@ -54,6 +53,7 @@ public class MyJoystick extends Joystick
     
     /**
      * Adjusts the dpad values from integers to booleans
+     * 
      * @return adjusted dpad value
      */
     public boolean getDpadUp()
@@ -63,6 +63,7 @@ public class MyJoystick extends Joystick
     
     /**
      * Adjusts the dpad values from integers to booleans
+     * 
      * @return adjusted dpad value
      */
     public boolean getDpadDown()
@@ -72,6 +73,7 @@ public class MyJoystick extends Joystick
     
     /**
      * Adjusts the dpad values from integers to booleans
+     * 
      * @return adjusted dpad value
      */
     public boolean getDpadRight()
@@ -81,6 +83,7 @@ public class MyJoystick extends Joystick
     
     /**
      * Adjusts the dpad values from integers to booleans
+     * 
      * @return adjusted dpad value
      */
     public boolean getDpadLeft()

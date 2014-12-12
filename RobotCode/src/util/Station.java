@@ -6,12 +6,14 @@ import edu.wpi.first.wpilibj.DriverStationLCD;
 /**
  * Class providing easy access to the driverstation screen and digital/analog
  * inputs
+ * 
  * @author Merfoo
  */
 public class Station 
 {
     /**
      * Gets the button status from the driverstation, 1 - 8 available.
+     * 
      * @param chn
      * @return 
      */
@@ -22,6 +24,7 @@ public class Station
     
     /**
      * Gets the analog value from the driverstation, 1 - 8 available.
+     * 
      * @param chn
      * @return 
      */
@@ -33,6 +36,7 @@ public class Station
     /**
      * Prints specified message to the driver station on the corresponding line
      * 1-6 are available.
+     * 
      * @param line
      * @param msg
      */

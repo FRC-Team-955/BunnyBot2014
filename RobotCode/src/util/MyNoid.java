@@ -3,11 +3,12 @@ package util;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
- *
+ * Wrapper class for Solenoid making two objects in this class
+ * 
  * @author Programming
  */
-public class MyNoid {
-
+public class MyNoid
+{
     Solenoid noidOne;
     Solenoid noidTwo;
 
@@ -17,7 +18,8 @@ public class MyNoid {
      * @param portOne
      * @param portTwo
      */
-    public MyNoid(int portOne, int portTwo) {
+    public MyNoid(int portOne, int portTwo) 
+    {
         noidOne = new Solenoid(portOne);
         noidTwo = new Solenoid(portTwo);
         noidOne.set(true);
@@ -29,16 +31,19 @@ public class MyNoid {
      *
      * @param newState
      */
-    public void set(boolean newState) {
+    public void set(boolean newState) 
+    {
         noidOne.set(newState);
         noidTwo.set(!newState);
     }
     
     /**
      * Gets solenoid value
+     * 
      * @return solenoid value
      */
-    public boolean get() {
+    public boolean get() 
+    {
         return noidOne.get();
     }
 }

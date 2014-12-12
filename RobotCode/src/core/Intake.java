@@ -52,14 +52,14 @@ public class Intake
         // INTAKE CLAW
         mtClaw.set(0);
         
-        if (joy.getButton(Config.MyJoystick.btIntakeOpen))
+        if (joy.getRawButton(Config.MyJoystick.btIntakeOpen))
         {
             statClaw += "CLOSING";
             System.out.println("Intake Claw Closing");
             openClaw();   
         }
         
-        if (joy.getButton(Config.MyJoystick.btIntakeClose))
+        if (joy.getRawButton(Config.MyJoystick.btIntakeClose))
         {
             statClaw += "OPENING";
             System.out.println("Intake Claw Opening");

@@ -35,8 +35,8 @@ public class MyJoystick extends Joystick
     {   
         for(int i = 0; i < Config.MyJoystick.numberOfButtons; i++)
         {
-            buttonState[i] = !lastButtonState[i] && super.getRawButton(i);
-            lastButtonState[i] = super.getRawButton(i);
+            buttonState[i] = !lastButtonState[i] && super.getRawButton(i + 1);
+            lastButtonState[i] = super.getRawButton(i + 1);
         }
     }
     

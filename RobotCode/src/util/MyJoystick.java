@@ -54,7 +54,7 @@ public class MyJoystick extends Joystick
     /**
      * Adjusts the dpad values from integers to booleans
      * 
-     * @return adjusted dpad value
+     * @return true if dpad is down
      */
     public boolean getDpadUp()
     {
@@ -64,7 +64,7 @@ public class MyJoystick extends Joystick
     /**
      * Adjusts the dpad values from integers to booleans
      * 
-     * @return adjusted dpad value
+     * @return true if dpad is down
      */
     public boolean getDpadDown()
     {
@@ -74,7 +74,7 @@ public class MyJoystick extends Joystick
     /**
      * Adjusts the dpad values from integers to booleans
      * 
-     * @return adjusted dpad value
+     * @return true if dpad is down
      */
     public boolean getDpadRight()
     {
@@ -84,7 +84,7 @@ public class MyJoystick extends Joystick
     /**
      * Adjusts the dpad values from integers to booleans
      * 
-     * @return adjusted dpad value
+     * @return true if dpad is down
      */
     public boolean getDpadLeft()
     {

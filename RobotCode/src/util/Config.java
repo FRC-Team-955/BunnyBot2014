@@ -23,7 +23,9 @@ public class Config
         public static final int btIntakeClose = 2;
         public static final int btIntakeUp = 7;
         public static final int btIntakeDown = 8;
-
+        public static final int btIntakeManual = 9;     // TODO SET THIS
+        public static final int btIntakeAutomatic = 10; // TODO SET THIS
+        public static final int btResetArmPid = 11;     // TODO SET THIS
     }
 
     public class Drive 
@@ -42,13 +44,26 @@ public class Config
 
     public class Intake 
     {
-        // Speed for arm/claw
+        // Speed for arm/claw in manual mode
         public static final double mtClawSpeed = 1;
         public static final double mtArmSpeed = 1;
         
         // Chn for intake talons
-        public static final int chnMtClaw = 6; //TODO CHANGE
+        public static final int chnMtClaw = 6;
         public static final int chnMtArm = 10;
+        
+        // Chn for intake arm encoder
+        public static final double distPerPulse = 255 / 360;
+        public static final int chnEncArmA = 1; // TODO SET CORRECT CHNS
+        public static final int chnEncArmB = 2;
+        
+        // Constants for arm pos/movement
+        public static final double posGround = 0;   // Down about to pick stuff
+        public static final double posStation = 0;  // Up doing nothing
+        public static final double posDropOff = 0;  // Drop widgets into pan
+        public static final double posInc = 0;      // Amount to increase arm
+        public static final double posMinArm = 0;
+        public static final double posMaxArm = 0;
     }
 
     public class Auto 
@@ -71,8 +86,8 @@ public class Config
         // Lines for printing on driverstation 1-6 only
         public static final int lnMain = 1;
         public static final int lnDrive = 2;
-        public static final int lnIntakeArm = 3;
-        public static final int lnIntakeClaw = 4;
+        public static final int lnIntakeArm = 4;
+        public static final int lnIntakeClaw = 5;
         public static final int lnAuto = 6;
         
         // Digital Input Channels for Autonomous

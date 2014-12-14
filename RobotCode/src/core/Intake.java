@@ -1,8 +1,10 @@
 package core;
 
+import edu.wpi.first.wpilibj.Encoder;
 import util.Config;
 import util.MyJoystick;
 import util.MyTalon;
+import util.PID;
 import util.Station;
 
 /**
@@ -12,15 +14,24 @@ import util.Station;
  */
 public class Intake 
 {
+    private Encoder encArm = new Encoder(Config.Intake.chnEncArmA, Config.Intake.chnEncArmB);
     private MyTalon mtClaw = new MyTalon(Config.Intake.chnMtClaw);
     private MyTalon mtArm = new MyTalon(Config.Intake.chnMtArm);
     private MyJoystick joy;
     private String statArm = "";    // Status of the arm
     private String statClaw = "";   // Status of the claw
+    private boolean manualMode = true;
+    private double posArm = 0.0;
+    private double kP = 0.0;
+    private double kI = 0.0;
+    private double kD = 0.0;
+    private PID pidArm = new PID(kP, kI, kD);
 
     public Intake(MyJoystick newJoy) 
     {
         joy = newJoy;
+        encArm.setDistancePerPulse(Config.Intake.distPerPulse);
+        encArm.start();
     }
 
     /**
@@ -29,27 +40,82 @@ public class Intake
      */
     public void run()
     {
-        statArm = "ARM: ";
+        // Reset stat messages
+        statArm = "ARM: " + (manualMode ? "M " : "A ");
         statClaw = "CLAW: ";
         
-        // INTAKE ARM
-        mtArm.set(0);
+        // Change between manual/automatic mode
+        if(joy.getButton(Config.MyJoystick.btIntakeManual))
+            manualMode = true;
         
-        if (joy.getRawButton(Config.MyJoystick.btIntakeUp)) 
+        if(joy.getButton(Config.MyJoystick.btIntakeAutomatic))
+            manualMode = false;
+        
+        /* INTAKE ARM */
+        // Manual mode, not using pid and encoders
+        if(manualMode)
         {
-            statArm += "UP";
-            System.out.println("Intake Up");
-            armUp();
-        }
+            posArm = encArm.getDistance();
+            mtArm.set(0);
+        
+            if(joy.getRawButton(Config.MyJoystick.btIntakeUp)) 
+            {
+                statArm += "UP";
+                System.out.println("Intake Up");
+                armUp();
+            }
 
-        if (joy.getRawButton(Config.MyJoystick.btIntakeDown))
-        {
-            statArm += "DOWN";
-            System.out.println("Intake Down");
-            armDown();
+            if(joy.getRawButton(Config.MyJoystick.btIntakeDown))
+            {
+                statArm += "DOWN";
+                System.out.println("Intake Down");
+                armDown();
+            }
         }
         
-        // INTAKE CLAW
+        // PID mode as in using pid and encoders
+        else
+        {            
+            // Sets the arm pid constants from driver station for tuning
+            pidArm.setConsts(Station.getAnalogIn(1), Station.getAnalogIn(2), Station.getAnalogIn(3));
+            
+            // We should reset the pid after changing constants
+            if(joy.getButton(Config.MyJoystick.btResetArmPid))
+                pidArm.reset();
+                
+            // Moves the intake arm manually by preset const
+            if(joy.getRawButton(Config.MyJoystick.btIntakeUp)) 
+                posArm += Config.Intake.posInc;
+
+            if(joy.getRawButton(Config.MyJoystick.btIntakeDown))
+                posArm -= Config.Intake.posInc;
+            
+            // Sets posArm to preset values depending on dpad
+            if(joy.getDpadRight())
+                posArm = Config.Intake.posStation;
+            
+            if(joy.getDpadUp())
+                posArm = Config.Intake.posDropOff;
+            
+            if(joy.getDpadDown())
+                posArm = Config.Intake.posGround;
+                
+            // Limits the posArm min/max
+            if(posArm < Config.Intake.posMinArm)
+                posArm = Config.Intake.posMinArm;
+            
+            else if(posArm > Config.Intake.posMaxArm)
+                posArm = Config.Intake.posMaxArm;
+            
+            // Updates the pid and sets mtArm to it
+            pidArm.update(encArm.getDistance(), posArm);
+            mtArm.set(pidArm.getOutput());
+            
+            // Status message
+            statArm += posArm;
+        }
+        
+        /* INTAKE CLAW */
         mtClaw.set(0);
         
         if (joy.getRawButton(Config.MyJoystick.btIntakeOpen))

@@ -36,11 +36,10 @@ public class PID
      */
     public void update(double curr, double want)
     {
-        double errP = curr - want;      // err = diff in pos aka proportional
-        double errI = totalErr + errP;  // integral of the err aka total err
-        double errD = errI - prevErr;   // derivative of err aka change in err
-        output = (errP * kP) + (errI * kI) + (errD * kD);
-        totalErr = errI;
+        double errP = want - curr;      // err = diff in pos aka proportional
+        totalErr += errP;               // integral of the err aka total err
+        double errD = errP - prevErr;   // derivative of err aka change in err
+        output = (errP * kP) + (totalErr * kI) + (errD * kD);
         prevErr = errP;
     }
     

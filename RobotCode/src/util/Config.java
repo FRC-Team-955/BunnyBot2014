@@ -53,7 +53,7 @@ public class Config
         public static final int chnMtArm = 10;
         
         // Chn for intake arm encoder
-        public static final double distPerPulse = 255 / 360;
+        public static final double distPerPulse = 256 / 360;
         public static final int chnEncArmA = 1; // TODO SET CORRECT CHNS
         public static final int chnEncArmB = 2;
         

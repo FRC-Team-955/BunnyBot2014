@@ -62,6 +62,7 @@ public class Auto
             case Config.Auto.idDoNothing:
                 break;
             case Config.Auto.driveForwardTime:
+                intake.armDown();
                 driveForward();
                 break;
         }
@@ -78,6 +79,7 @@ public class Auto
         else 
         {
             drive.stop();
+            intake.openClaw();
             tmAuto.stop();
         }
         

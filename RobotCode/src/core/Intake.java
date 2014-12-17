@@ -15,8 +15,6 @@ import util.Station;
 public class Intake 
 {
     private Encoder encArm = new Encoder(Config.Intake.chnEncArmA, Config.Intake.chnEncArmB);
-    private MyTalon mtClaw = new MyTalon(Config.Intake.chnMtClaw);
-    private MyTalon mtArm = new MyTalon(Config.Intake.chnMtArm);
     private MyJoystick joy;
     private String statArm = "";    // Status of the arm
     private String statClaw = "";   // Status of the claw
@@ -26,6 +24,9 @@ public class Intake
     private double kI = 0.0;
     private double kD = 0.0;
     private PID pidArm = new PID(kP, kI, kD);
+    
+    public MyTalon mtClaw = new MyTalon(Config.Intake.chnMtClaw);
+    public MyTalon mtArm = new MyTalon(Config.Intake.chnMtArm);
 
     public Intake(MyJoystick newJoy) 
     {

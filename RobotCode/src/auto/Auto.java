@@ -62,8 +62,7 @@ public class Auto
             case Config.Auto.idDoNothing:
                 break;
             case Config.Auto.driveForwardTime:
-                intake.armDown();
-                driveForward();
+                intakeAuto();
                 break;
         }
     }
@@ -80,12 +79,25 @@ public class Auto
         {
             drive.stop();
             intake.openClaw();
-            tmAuto.stop();
         }
         
         System.out.println(tmAuto.get());   // PRINT 
     }
     
+    public void intakeAuto()
+    {
+        if(tmAuto.get() <= Config.Auto.intakeLowerTime)
+            intake.armDown();
+        else if (tmAuto.get() <= Config.Auto.intakeCloseTime)
+        {
+            intake.mtArm.set(0);
+            intake.closeClaw();
+        }
+        else
+            intake.mtClaw.set(0);
+            driveForward();
+        
+    }
     /**
      * Runs the test routine
      */

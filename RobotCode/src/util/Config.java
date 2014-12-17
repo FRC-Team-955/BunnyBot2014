@@ -73,12 +73,15 @@ public class Config
         public static final int idForwardOnly = 1;
         
         // Times/Speeds for auto routines
-        public static final int driveForwardTime = 10;
+        public static final int driveForwardTime = 7;
         public static final double driveForwardSpeed = 1;
+        public static final double intakeLowerTime = 1.5;
+        public static final double intakeCloseTime = .5;
         
         // Times/Speeds for test routine
         public static final double testDriveTime = 1;
         public static final double testDriveSpeed = 0.5;
+        
     }
     
     public class Station

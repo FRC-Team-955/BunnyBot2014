@@ -14,8 +14,8 @@ public class Config
         public static final int chn = 1;
 
         // Axes for DPAD
-        public static final int chnDpadHorz = 6;
-        public static final int chnDpadVert = 5;
+        public static final int chnDpadHorz = 5;    // AXES MIGHT CHANGE LAPTOP TO TOP
+        public static final int chnDpadVert = 6;    // THIS TOO!!!
         public static final double minDpadNumber = .5;
         
         // Button chn for joystick
@@ -26,6 +26,7 @@ public class Config
         public static final int btIntakeManual = 9;     // TODO SET THIS
         public static final int btIntakeAutomatic = 10; // TODO SET THIS
         public static final int btResetArmPid = 11;     // TODO SET THIS
+        public static final int btResetArmEnc = 12;     // TODO SET THIS
     }
 
     public class Drive 
@@ -54,16 +55,16 @@ public class Config
         
         // Chn for intake arm encoder
         public static final double distPerPulse = 256 / 360;
-        public static final int chnEncArmA = 1; // TODO SET CORRECT CHNS
-        public static final int chnEncArmB = 2;
+        public static final int chnEncArmA = 11; // TODO SET CORRECT CHNS
+        public static final int chnEncArmB = 6;
         
         // Constants for arm pos/movement
-        public static final double posGround = 0;   // Down about to pick stuff
-        public static final double posStation = 0;  // Up doing nothing
-        public static final double posDropOff = 0;  // Drop widgets into pan
-        public static final double posInc = 0;      // Amount to increase arm
-        public static final double posMinArm = 0;
-        public static final double posMaxArm = 0;
+        public static final double posGround = -588;   // Down about to pick stuff
+        public static final double posStation = -224;  // Up doing nothing
+        public static final double posDropOff = -90;  // Drop widgets into pan
+        public static final double posInc = 10;      // Amount to increase arm
+        public static final double posMinArm = posGround;
+        public static final double posMaxArm = posDropOff;
     }
 
     public class Auto 

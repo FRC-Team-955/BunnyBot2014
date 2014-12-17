@@ -58,7 +58,7 @@ public class MyJoystick extends Joystick
      */
     public boolean getDpadUp()
     {
-        return super.getRawAxis(Config.MyJoystick.chnDpadVert) > Config.MyJoystick.minDpadNumber;           
+        return super.getRawAxis(Config.MyJoystick.chnDpadVert) < -Config.MyJoystick.minDpadNumber;           
     }
     
     /**
@@ -68,7 +68,7 @@ public class MyJoystick extends Joystick
      */
     public boolean getDpadDown()
     {
-        return super.getRawAxis(Config.MyJoystick.chnDpadVert) < -Config.MyJoystick.minDpadNumber;            
+        return super.getRawAxis(Config.MyJoystick.chnDpadVert) > Config.MyJoystick.minDpadNumber;            
     }
     
     /**

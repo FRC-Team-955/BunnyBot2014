@@ -32,6 +32,7 @@ public class Intake
     {
         joy = newJoy;
         encArm.setDistancePerPulse(Config.Intake.distPerPulse);
+        encArm.reset();
         encArm.start();
     }
 
@@ -56,7 +57,7 @@ public class Intake
         // Manual mode, not using pid and encoders
         if(manualMode)
         {
-            posArm = encArm.getDistance();
+            posArm = encArm.getRaw() * -1;
             mtArm.set(0);
         
             if(joy.getRawButton(Config.MyJoystick.btIntakeUp)) 
@@ -79,17 +80,22 @@ public class Intake
         {            
             // Sets the arm pid constants from driver station for tuning
             pidArm.setConsts(Station.getAnalogIn(1), Station.getAnalogIn(2), Station.getAnalogIn(3));
+            System.out.println(Station.getAnalogIn(1));
             
             // We should reset the pid after changing constants
             if(joy.getButton(Config.MyJoystick.btResetArmPid))
                 pidArm.reset();
                 
+            // Reset encoder 
+            if(joy.getButton(Config.MyJoystick.btResetArmEnc))
+                encArm.reset();
+            
             // Moves the intake arm manually by preset const
-            if(joy.getRawButton(Config.MyJoystick.btIntakeUp)) 
-                posArm += Config.Intake.posInc;
-
-            if(joy.getRawButton(Config.MyJoystick.btIntakeDown))
-                posArm -= Config.Intake.posInc;
+//            if(joy.getRawButton(Config.MyJoystick.btIntakeUp)) 
+//                posArm += Config.Intake.posInc;
+//
+//            if(joy.getRawButton(Config.MyJoystick.btIntakeDown))
+//                posArm -= Config.Intake.posInc;
             
             // Sets posArm to preset values depending on dpad
             if(joy.getDpadRight())
@@ -102,19 +108,21 @@ public class Intake
                 posArm = Config.Intake.posGround;
                 
             // Limits the posArm min/max
-            if(posArm < Config.Intake.posMinArm)
-                posArm = Config.Intake.posMinArm;
-            
-            else if(posArm > Config.Intake.posMaxArm)
-                posArm = Config.Intake.posMaxArm;
+//            if(posArm < Config.Intake.posMinArm)
+//                posArm = Config.Intake.posMinArm;
+//            
+//            else if(posArm > Config.Intake.posMaxArm)
+//                posArm = Config.Intake.posMaxArm;
             
             // Updates the pid and sets mtArm to it
-            pidArm.update(encArm.getDistance(), posArm);
-            mtArm.set(pidArm.getOutput());
+            pidArm.update(encArm.getRaw() * -1, posArm);
+            mtArm.set(pidArm.getOutput() * -1);
             
             // Status message
             statArm += posArm;
         }
+        
+        System.out.println("PID: " + pidArm.getOutput() + " || ENC: " + (encArm.getRaw() * -1)+ " || WANT: " + posArm);
         
         /* INTAKE CLAW */
         mtClaw.set(0);
@@ -159,7 +167,7 @@ public class Intake
      */
     public void armUp() 
     {
-        mtArm.set(Config.Intake.mtArmSpeed);
+        mtArm.set(-Config.Intake.mtArmSpeed);
     }
 
     /**
@@ -167,6 +175,6 @@ public class Intake
      */
     public void armDown()
     {
-        mtArm.set(-Config.Intake.mtArmSpeed);
+        mtArm.set(Config.Intake.mtArmSpeed);
     }
 }

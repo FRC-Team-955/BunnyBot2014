@@ -63,6 +63,9 @@ public class Main extends IterativeRobot
         joy.update();
         drive.run();
         intake.run();
+//        System.out.println(joy.getDpadRight() + " RIGHT ");
+//        System.out.println(joy.getDpadUp()+ " UP ");
+//        System.out.println(joy.getDpadDown()+ " DOWN ");
         Station.print(Config.Station.lnMain, inspirationalMessage);
     }
     

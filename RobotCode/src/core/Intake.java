@@ -16,23 +16,20 @@ public class Intake
 {
     private Encoder encArm = new Encoder(Config.Intake.chnEncArmA, Config.Intake.chnEncArmB);
     private MyJoystick joy;
-    private String statArm = "";    // Status of the arm
-    private String statClaw = "";   // Status of the claw
-    private boolean manualMode = true;
+    private String statArm = "";            // Status of the arm
+    private String statClaw = "";           // Status of the claw
+    private boolean manualArmMode = true;
     private double posArm = 0.0;
-    private double kP = 0.0;
-    private double kI = 0.0;
-    private double kD = 0.0;
-    private PID pidArm = new PID(kP, kI, kD);
-    
+    private PID pidArm = new PID(Config.Pid.Arm.kP, Config.Pid.Arm.kI, Config.Pid.Arm.kD);
     public MyTalon mtClaw = new MyTalon(Config.Intake.chnMtClaw);
     public MyTalon mtArm = new MyTalon(Config.Intake.chnMtArm);
-
+    
     public Intake(MyJoystick newJoy) 
     {
         joy = newJoy;
-        encArm.setDistancePerPulse(Config.Intake.distPerPulse);
-        encArm.reset();
+        pidArm.reset();
+        encArm.setDistancePerPulse(Config.Intake.armEncDistPerPulse);
+        //encArm.reset();
         encArm.start();
     }
 
@@ -42,114 +39,127 @@ public class Intake
      */
     public void run()
     {
+        // Change between manual/automatic mode
+        if(joy.getButton(Config.MyJoystick.btArmManual) || Station.getDigitalIn(Config.Station.chnManualArmOnly))
+            manualArmMode = true;
+        
+        else if(joy.getButton(Config.MyJoystick.btArmAutomatic))
+            manualArmMode = false;
+        
         // Reset stat messages
-        statArm = "ARM: " + (manualMode ? "M " : "A ");
+        statArm = "ARM: " + (manualArmMode ? "M " : "A ");
         statClaw = "CLAW: ";
         
-        // Change between manual/automatic mode
-        if(joy.getButton(Config.MyJoystick.btIntakeManual))
-            manualMode = true;
-        
-        if(joy.getButton(Config.MyJoystick.btIntakeAutomatic))
-            manualMode = false;
-        
-        /* INTAKE ARM */
+        /*** INTAKE ARM ***/
         // Manual mode, not using pid and encoders
-        if(manualMode)
+        if(manualArmMode)
         {
-            posArm = encArm.getRaw() * -1;
-            mtArm.set(0);
+            // Get arm pos so if we switch to automatic it wont go cray cray
+            posArm = getArmPos();
+            armStop();
         
-            if(joy.getRawButton(Config.MyJoystick.btIntakeUp)) 
+            if(joy.getRawButton(Config.MyJoystick.btArmUp)) 
             {
                 statArm += "UP";
-                System.out.println("Intake Up");
                 armUp();
             }
 
-            if(joy.getRawButton(Config.MyJoystick.btIntakeDown))
+            else if(joy.getRawButton(Config.MyJoystick.btArmDown))
             {
                 statArm += "DOWN";
-                System.out.println("Intake Down");
                 armDown();
             }
+            
+            else
+                statArm += "NOTHING";
         }
         
         // PID mode as in using pid and encoders
         else
         {            
             // Sets the arm pid constants from driver station for tuning
-            pidArm.setConsts(Station.getAnalogIn(1), Station.getAnalogIn(2), Station.getAnalogIn(3));
-            System.out.println(Station.getAnalogIn(1));
-            
-            // We should reset the pid after changing constants
-            if(joy.getButton(Config.MyJoystick.btResetArmPid))
-                pidArm.reset();
-                
-            // Reset encoder 
-            if(joy.getButton(Config.MyJoystick.btResetArmEnc))
-                encArm.reset();
-            
-            // Moves the intake arm manually by preset const
-//            if(joy.getRawButton(Config.MyJoystick.btIntakeUp)) 
-//                posArm += Config.Intake.posInc;
-//
-//            if(joy.getRawButton(Config.MyJoystick.btIntakeDown))
-//                posArm -= Config.Intake.posInc;
-            
-            // Sets posArm to preset values depending on dpad
-            if(joy.getDpadRight())
-                posArm = Config.Intake.posStation;
-            
+            //pidArm.setConsts(Station.getAnalogIn(1), Station.getAnalogIn(2), Station.getAnalogIn(3));
+                        
+            // Sets posArm to preset values depending on dpad            
             if(joy.getDpadUp())
+            {
+                statArm += "DROP OFF";
                 posArm = Config.Intake.posDropOff;
+            }
+            
+            if(joy.getDpadRight())
+            {
+                statArm += "STATIONARY";
+                posArm = Config.Intake.posStation;
+            }
             
             if(joy.getDpadDown())
+            {
+                statArm += "GROUND";
                 posArm = Config.Intake.posGround;
-                
-            // Limits the posArm min/max
-//            if(posArm < Config.Intake.posMinArm)
-//                posArm = Config.Intake.posMinArm;
-//            
-//            else if(posArm > Config.Intake.posMaxArm)
-//                posArm = Config.Intake.posMaxArm;
+            }
+            
+            if(joy.getDpadLeft())
+            {
+                statArm += "STARTING";
+                posArm = Config.Intake.posStarting;
+            }
             
             // Updates the pid and sets mtArm to it
-            pidArm.update(encArm.getRaw() * -1, posArm);
-            mtArm.set(pidArm.getOutput() * -1);
-            
-            // Status message
-            statArm += posArm;
+            setArmPos(posArm);
         }
         
-        System.out.println("PID: " + pidArm.getOutput() + " || ENC: " + (encArm.getRaw() * -1)+ " || WANT: " + posArm);
+        System.out.println("PID: " + pidArm.getOutput() + " || ENC: " + getArmPos() + " || WANT: " + posArm);
         
-        /* INTAKE CLAW */
-        mtClaw.set(0);
-        
-        if (joy.getRawButton(Config.MyJoystick.btIntakeOpen))
+        /*** INTAKE CLAW ***/
+        clawStop();
+
+        if(joy.getRawButton(Config.MyJoystick.btClawOpen))
         {
-            statClaw += "CLOSING";
-            System.out.println("Intake Claw Closing");
-            openClaw();   
-        }
-        
-        if (joy.getRawButton(Config.MyJoystick.btIntakeClose))
+            statArm += "OPENING";
+            clawOpen();
+        }   
+
+        else if(joy.getRawButton(Config.MyJoystick.btClawClose))
         {
-            statClaw += "OPENING";
-            System.out.println("Intake Claw Opening");
-            closeClaw();
+            statArm += "CLOSING";
+            clawClose();
         }
+         
+        else
+            statArm += "NOTHING";
         
         // PRINTING TO DRIVERSTATION
+        Station.print(Config.Station.lnIntakeEncs, "Arm: " + getArmPos());
         Station.print(Config.Station.lnIntakeArm, statArm);
         Station.print(Config.Station.lnIntakeClaw, statClaw);
     }
 
     /**
+     * Sets the arm position
+     * 
+     * @param pos
+     */
+    public void setArmPos(double pos)
+    {
+        pidArm.update(getArmPos(), pos);
+        mtArm.set(pidArm.getOutput());
+    }
+    
+    /** 
+     * Gets the arm rotation pos
+     * 
+     * @return arm pos
+     */
+    public double getArmPos()
+    {
+        return encArm.getRaw();
+    }
+    
+    /**
      * Opens horizontal part of intake
      */
-    public void openClaw() 
+    public void clawOpen() 
     {
         mtClaw.set(Config.Intake.mtClawSpeed);
     }
@@ -157,9 +167,17 @@ public class Intake
     /**
      * Closes horizontal part of intake
      */
-    public void closeClaw()
+    public void clawClose()
     {
         mtClaw.set(-Config.Intake.mtClawSpeed);
+    }
+    
+    /**
+    * Stops claw motion
+    */
+    public void clawStop()
+    {
+        mtClaw.set(0);
     }
 
     /**
@@ -176,5 +194,13 @@ public class Intake
     public void armDown()
     {
         mtArm.set(Config.Intake.mtArmSpeed);
+    }
+    
+    /**
+     * Stops arm motion
+     */
+    public void armStop()
+    {
+        mtArm.set(0);
     }
 }

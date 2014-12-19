@@ -16,8 +16,8 @@ public class Auto
     private Timer tmAuto = new Timer();
     private Drive drive;
     private Intake intake;
-    private String statAuto = "";   // Status of auto
-    private int step = 0;           // Step for step during auto
+    private String statAuto = "";                   // Status of auto
+    private int step = 0;                           // Step for step during auto
     private int autoID = Config.Auto.idDoNothing;   // ID for auto routine
     
     public Auto(Drive newDrive, Intake newIntake)
@@ -36,9 +36,9 @@ public class Auto
         tmAuto.reset();
         tmAuto.start();
         autoID = Config.Auto.idDoNothing;
-
+        
         if(Station.getDigitalIn(Config.Station.chnModeForwardOnly))
-            autoID = Config.Auto.idForwardOnly;
+            autoID = Config.Auto.idDropWidget;
     }
     
     /**
@@ -62,42 +62,67 @@ public class Auto
             case Config.Auto.idDoNothing:
                 break;
             case Config.Auto.driveForwardTime:
-                intakeAuto();
+                dropWidgets();
                 break;
         }
     }
     
-    /**
-     * Drives the robot forward
-     */
-    public void driveForward() 
+    public void dropWidgets()
     {
-        if(tmAuto.get() <= Config.Auto.driveForwardTime)
-            drive.moveForward(Config.Auto.driveForwardSpeed, true);
-        
-        else 
+        switch(step)
         {
-            drive.stop();
-            intake.openClaw();
+            case 0:
+            {
+                if(tmAuto.get() <= Config.Auto.intakeCloseTime)
+                    intake.clawClose();
+                
+                else
+                {
+                    intake.clawStop();
+                    tmAuto.reset();
+                    step++;
+                }
+                
+                break;
+            }
+            
+            case 1:
+            {
+                if(tmAuto.get() <= Config.Auto.driveForwardTime)
+                {
+                    drive.moveForward(Config.Auto.driveForwardSpeed, true);
+                    intake.setArmPos(Config.Intake.posGround);
+                }
+                
+                else
+                {
+                    drive.stop();
+                    intake.armStop();
+                    tmAuto.reset();
+                    step++;
+                }
+                
+                break;
+            }
+            
+            case 2:
+            {
+                if(tmAuto.get() <= Config.Auto.intakeCloseTime)
+                    intake.clawOpen();
+                
+                else
+                {
+                    intake.clawStop();
+                    tmAuto.reset();
+                    step++;
+                }
+                
+                break;
+            }
+                  
         }
-        
-        System.out.println(tmAuto.get());   // PRINT 
     }
     
-    public void intakeAuto()
-    {
-        if(tmAuto.get() <= Config.Auto.intakeLowerTime)
-            intake.armDown();
-        else if (tmAuto.get() <= Config.Auto.intakeCloseTime)
-        {
-            intake.mtArm.set(0);
-            intake.closeClaw();
-        }
-        else
-            intake.mtClaw.set(0);
-            driveForward();
-        
-    }
     /**
      * Runs the test routine
      */

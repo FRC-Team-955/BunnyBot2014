@@ -16,10 +16,11 @@ import util.Station;
 public class Main extends IterativeRobot
 {
     private MyJoystick joy = new MyJoystick(Config.MyJoystick.chn);
+    private MyJoystick joyTwo = new MyJoystick(Config.MyJoystick.chnTwo);
     private Drive drive = new Drive(joy);
     private Intake intake = new Intake(joy);
     private Auto auto = new Auto(drive, intake);
-    private String inspirationalMessage = "Good Luck, You da best :)";
+    private String statMain = "Good Luck, You da best :)";
     
     /**
      * This function is run when the robot is first started up and should be
@@ -60,10 +61,26 @@ public class Main extends IterativeRobot
      */
     public void teleopPeriodic() 
     {
+        Station.clearAllText();
+        statMain = "S: DO GOOD!";
         joy.update();
+        joyTwo.update();
+        
+//        if(joy.getButton(Config.MyJoystick.btSingleMode))
+//        {
+//            statMain = "S: DO GOOD!";
+//            intake.setJoy(joy);
+//        }
+//        
+//        else if(joy.getButton(Config.MyJoystick.btDualMode))
+//        {
+//            statMain = "D: DO GOODS!";
+//            intake.setJoy(joyTwo);
+//        }
+        
         drive.run();
         intake.run();
-        Station.print(Config.Station.lnMain, inspirationalMessage);
+        Station.print(Config.Station.lnMain, statMain);
     }
     
     /**

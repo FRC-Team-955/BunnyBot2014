@@ -58,14 +58,16 @@ public class Intake
             posArm = getArmPos();
             armStop();
         
-            if(joy.getRawButton(Config.MyJoystick.btArmUp)) 
+            if(joy.getRawButton(Config.MyJoystick.btArmUp))//if(joy.getRawButton(Config.MyJoystickTwo.btArmUp)) 
             {
+                System.out.println("ARM UP");
                 statArm += "UP";
                 armUp();
             }
 
-            else if(joy.getRawButton(Config.MyJoystick.btArmDown))
+            else if(joy.getRawButton(Config.MyJoystick.btArmDown)) // if(joy.getRawButton(Config.MyJoystick2.btArmDown))
             {
+                System.out.println("ARM DOWN");
                 statArm += "DOWN";
                 armDown();
             }
@@ -105,23 +107,24 @@ public class Intake
                 posArm = Config.Intake.posStarting;
             }
             
-            // Updates the pid and sets mtArm to it
+            // Updates the pid and sets mtArm to it, print stuff for debug
             setArmPos(posArm);
+            System.out.println("PID: " + pidArm.getOutput() + " || ENC: " + getArmPos() + " || WANT: " + posArm);
         }
-        
-        System.out.println("PID: " + pidArm.getOutput() + " || ENC: " + getArmPos() + " || WANT: " + posArm);
         
         /*** INTAKE CLAW ***/
         clawStop();
 
-        if(joy.getRawButton(Config.MyJoystick.btClawOpen))
+        if(joy.getRawButton(Config.MyJoystick.btClawOpen)) //if(joy.getRawButton(Config.MyJoystickTwo.btClawOpen))
         {
+            System.out.println("CLAW OPENING");
             statArm += "OPENING";
             clawOpen();
         }   
 
-        else if(joy.getRawButton(Config.MyJoystick.btClawClose))
+        else if(joy.getRawButton(Config.MyJoystick.btClawClose)) //if(joy.getRawButton(Config.MyJoystickTwo.btClawClose))
         {
+            System.out.println("CLAW CLOSING");
             statArm += "CLOSING";
             clawClose();
         }
@@ -202,5 +205,13 @@ public class Intake
     public void armStop()
     {
         mtArm.set(0);
+    }
+    
+    /**
+     * Sets the joystick to control the intake
+     */
+    public void setJoy(MyJoystick newJoy)
+    {
+        joy = newJoy;
     }
 }

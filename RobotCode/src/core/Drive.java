@@ -35,6 +35,7 @@ public class Drive
         double x = Math.abs(joy.getX()) * joy.getX();
         double y = Math.abs(joy.getY()) * joy.getY();
         
+        x *= Config.Drive.turningScalar;
         setSpeed(-x + y, x + y, true);
         Station.print(Config.Station.lnDrive, statDrive);
     }
@@ -110,7 +111,7 @@ public class Drive
      */
     public void moveForward (double speed, boolean ramp) 
     {
-        setSpeed(speed, speed, ramp);
+        setSpeed(-speed, -speed, ramp);
     } 
     
     /**
@@ -121,7 +122,7 @@ public class Drive
      */
     public void moveBack (double speed, boolean ramp) 
     {
-        setSpeed( -speed, -speed, ramp);
+        setSpeed(speed, speed, ramp);
     } 
     
     /**
